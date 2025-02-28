@@ -26,8 +26,4 @@ int main() {
     std::cout << "Sum: " << sum << std::endl;
 
     return 0;
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> make
