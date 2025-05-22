@@ -95,7 +95,7 @@ int main(int argc, char const *argv[]) {
     #pragma acc data copyin(error, previousMatrix[0:matrixSize * matrixSize], updatedMatrix[0:matrixSize * matrixSize])
     {
         while (iteration < maxIterations && error > accuracy) {
-            #pragma acc parallel loop present(updatedMatrix, previousMatrix)
+            #pragma acc parallel loop collapse(2) present(updatedMatrix, previousMatrix)
             for (size_t i = 1; i < matrixSize - 1; i++) {
                 for (size_t j = 1; j < matrixSize - 1; j++) {
                     updatedMatrix[i * matrixSize + j] = 0.25 * (
@@ -109,7 +109,7 @@ int main(int argc, char const *argv[]) {
             if ((iteration + 1) % 10000 == 0) {
                 error = 0.0;
                 #pragma acc update device(error)
-                #pragma acc parallel loop reduction(max:error) present(updatedMatrix, previousMatrix)
+                #pragma acc parallel loop collapse(2) reduction(max:error) present(updatedMatrix, previousMatrix)
                 for (size_t i = 1; i < matrixSize - 1; i++) {
                     for (size_t j = 1; j < matrixSize - 1; j++) {
                         error = std::max(error, std::abs(updatedMatrix[i * matrixSize + j] - previousMatrix[i * matrixSize + j]));
