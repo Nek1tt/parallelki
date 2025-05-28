@@ -14,14 +14,14 @@ add_executable(${project_name} src/lab7cublas.cpp)
 
 target_compile_options(${project_name} PRIVATE 
   -acc=gpu 
-  # -Minfo=all 
-
+  -Minfo=all 
+  -O2
 )
 
 target_link_options(${project_name} PRIVATE 
   -acc=gpu 
-  # -Minfo=all
-
+  -Minfo=all
+  -O2
 )
 
 target_link_libraries(${project_name} 
